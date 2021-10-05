@@ -1,49 +1,32 @@
 import { useQueryClient, useMutation } from "react-query";
 import instance from "../instance";
-function DeliveryItem({ deliveries, delivery }) {
+function DeliveryItem({ delivery }) {
   const queryClient = useQueryClient();
-
   const { mutate } = useMutation(
-    async (updatedDelivery) =>
-      await instance
+    (updatedDelivery) =>
+      instance
         .put(`/deliveries/${updatedDelivery.deliveryId}`, updatedDelivery, {
           headers: { "x-api-key": "123456789" },
         })
         .then((res) => res.data),
-
     {
-      onSuccess: (data) => console.log(data, 4),
-      // When mutate is called:
-      onMutate: async (mutateData) => {
+      onMutate: (mutateData) => {
         // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-        await queryClient.cancelQueries("deliveries", { exact: true });
+        queryClient.cancelQueries("deliveries", { exact: true });
         // Snapshot the previous value
         const previousDeliveries = queryClient.getQueryData("deliveries");
-
-        console.log(previousDeliveries, "1");
-
-        console.log(mutateData, "3");
         // Optimistically update to the new value
         queryClient.setQueryData("deliveries", (previousDeliveries) =>
-          // previousDeliveries.map((oldDelivery) =>
-          //   oldDelivery.id === mutateData.deliveryId
-          //     ? { ...oldDelivery, status: mutateData.status }
-          //     : oldDelivery
-          // )
-          []
+          previousDeliveries.map((oldDelivery) =>
+            oldDelivery.id === mutateData.deliveryId
+              ? { ...oldDelivery, status: mutateData.status }
+              : oldDelivery
+          )
         );
-        const newDeliveries = queryClient.getQueryData("deliveries");
-
-        console.log(newDeliveries, "2");
-
-        // Return a context object with the snapshotted value
+        //Return a context object with the snapshotted value
         return { previousDeliveries };
       },
-
       onError: (rollback) => rollback(),
-
-      // Always refetch after error or success:
-      onSettled: () => queryClient.invalidateQueries("deliveries"),
     }
   );
 
@@ -60,9 +43,9 @@ function DeliveryItem({ deliveries, delivery }) {
                 mutate({ deliveryId: delivery.id, status: "delivered" })
               }
               type="button"
-              className="btn button-color-1 col-10 "
+              className="btn btn-success"
             >
-              Delivered
+              <span> Delivered</span>
             </button>
           ) : (
             <button
@@ -70,9 +53,9 @@ function DeliveryItem({ deliveries, delivery }) {
                 mutate({ deliveryId: delivery.id, status: "delivering" })
               }
               type="button"
-              className="btn button-color-2 col-10 "
+              className="btn btn-primary"
             >
-              Pick for delivery
+              <span> Pick for delivery</span>
             </button>
           )}
         </td>

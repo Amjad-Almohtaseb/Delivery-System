@@ -8,7 +8,7 @@ function DeliveryList() {
     "deliveries",
     async () => await instance.get("/deliveries").then((res) => res.data)
   );
-  console.log(data, "5");
+
   if (isLoading) {
     return <Loading />;
   }

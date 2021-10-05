@@ -6,7 +6,6 @@ const Api_Key = "123456789";
 
 exports.deliveriesList = (req, res) => {
   res.json(data);
-  console.log("object");
 };
 
 exports.deliveriesUpdate = (req, res) => {

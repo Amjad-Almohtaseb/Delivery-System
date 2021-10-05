@@ -230,13 +230,29 @@ body {
 .home-container {
   height: 200 px !important;
 }
-.button-color-1 {
+.btn-success,
+.btn-success:hover,
+.btn-success:active,
+.btn-success:visited,
+.btn-success:focus {
+  display: flex !important;
   background-color: #e36414 !important;
   color: white !important;
   font-weight: bold !important;
+  border-color: #e36414 !important;
+  width: 73% !important ;
+  justify-content: center !important;
 }
-.button-color-2 {
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+  display: flex !important;
   background-color: #3d5a80 !important;
   color: white !important;
   font-weight: bold !important;
+  border-color: #3d5a80 !important;
+  width: 73% !important;
+  justify-content: center !important;
 }
