@@ -23,7 +23,7 @@ exports.deliveriesUpdate = (req, res) => {
 
       fs.writeFileSync("data.json", JSON.stringify(updatedDeliveries, null, 2));
 
-      res.json(updatedDelivery);
+      res.status(204).end();
     } else {
       res.status(404).json({ message: "Path Not Found" });
     }

@@ -243,6 +243,7 @@ body {
   width: 73% !important ;
   justify-content: center !important;
 }
+
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:active,
@@ -255,4 +256,22 @@ body {
   border-color: #3d5a80 !important;
   width: 73% !important;
   justify-content: center !important;
+}
+.search-bar {
+  color: #3d5a80;
+  font-weight: bold;
+  padding: 5px;
+  padding-left: 20px;
+  outline: none;
+  border-radius: 20px 20px;
+  width: 100%;
+  margin-left: -15%;
+  background-color: #d0e2fa;
+  max-width: 280px;
+}
+.name-cell {
+  min-width: 200px;
+}
+.address-cell {
+  min-width: 600px;
 }

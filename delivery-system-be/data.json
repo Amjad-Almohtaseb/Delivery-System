@@ -12,8 +12,7 @@
     "name": "Ms. Wanda Heidenreich",
     "lat": 21.7137,
     "lng": -38.2952,
-    "address": "Virgin Islands, British, Emersonton, 16714 Reinger Crescent",
-    "status": "delivered"
+    "address": "Virgin Islands, British, Emersonton, 16714 Reinger Crescent"
   },
   {
     "id": "7aa04082-35e2-40c6-bfd6-72b9298ddf09",
@@ -21,7 +20,7 @@
     "lat": 48.3235,
     "lng": -176.2271,
     "address": "Maldives, Idellamouth, 373 Lavon Lakes",
-    "status": "delivering"
+    "status": "delivered"
   },
   {
     "id": "1f8974c9-7ac7-48b2-901f-27df8697c588",

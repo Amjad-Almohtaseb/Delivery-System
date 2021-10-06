@@ -1,20 +1,27 @@
-import { useQueryClient, useMutation } from "react-query";
 import instance from "../instance";
+import { useQueryClient, useMutation } from "react-query";
+
 function DeliveryItem({ delivery }) {
   const queryClient = useQueryClient();
+
   const { mutate } = useMutation(
     (updatedDelivery) =>
-      instance
-        .put(`/deliveries/${updatedDelivery.deliveryId}`, updatedDelivery, {
+      instance.put(
+        `/deliveries/${updatedDelivery.deliveryId}`,
+        updatedDelivery,
+        {
           headers: { "x-api-key": "123456789" },
-        })
-        .then((res) => res.data),
+        }
+      ),
+
     {
       onMutate: (mutateData) => {
         // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
         queryClient.cancelQueries("deliveries", { exact: true });
+
         // Snapshot the previous value
         const previousDeliveries = queryClient.getQueryData("deliveries");
+
         // Optimistically update to the new value
         queryClient.setQueryData("deliveries", (previousDeliveries) =>
           previousDeliveries.map((oldDelivery) =>
@@ -23,10 +30,15 @@ function DeliveryItem({ delivery }) {
               : oldDelivery
           )
         );
-        //Return a context object with the snapshotted value
-        return { previousDeliveries };
+
+        //Return the snapshotted value
+        return () => queryClient.setQueryData("deliveries", previousDeliveries);
       },
-      onError: (rollback) => rollback(),
+
+      onError: (error, delivery, rollback) => {
+        console.log(error);
+        if (rollback) rollback();
+      },
     }
   );
 
@@ -42,8 +54,8 @@ function DeliveryItem({ delivery }) {
               onClick={() =>
                 mutate({ deliveryId: delivery.id, status: "delivered" })
               }
-              type="button"
               className="btn btn-success"
+              type="button"
             >
               <span> Delivered</span>
             </button>
